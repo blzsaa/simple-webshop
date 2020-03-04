@@ -8,6 +8,9 @@ public class TestConstants {
   public static final Product2Create SNAKE_OIL_PRODUCT2CREATE =
       new Product2Create().name("snake oil").price(135L);
 
+  public static final Product2Create ACME_PRODUCT2CREATE =
+      new Product2Create().name("ACME").price(1000L);
+
   public static final Product SNAKE_OIL_PRODUCT =
       new Product().id(3L).name("snake oil").price(135L);
 

@@ -112,6 +112,33 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Product not found"
+  /orders:
+    post:
+      tags:
+        - "product"
+      summary: "Create new order"
+      description: "create new order"
+      operationId: "createNewOrder"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Order (email address, product ids, quantities)"
+          required: true
+          schema:
+            $ref: "#/definitions/Order"
+      responses:
+        200:
+          description: "Order created"
+          schema:
+            $ref: "#/definitions/CreatedOrder"
+        400:
+          description: "Invalid input"
+        404:
+          description: "One or mote products were not found"
 definitions:
   Product2Create:
     type: "object"
@@ -149,3 +176,49 @@ definitions:
         format: int64
         example: 100000
         description: "Price in EURO"
+  Order:
+    type: "object"
+    required:
+      - "email-address"
+      - "productId"
+    properties:
+      email-address:
+        type: "string"
+        example: "firstName.lastName@company.com"
+        description: "Buyer's email address"
+      productId:
+        type: "array"
+        items:
+          type: "integer"
+          format: int64
+          example: 100000
+        description: "ids of products to buy"
+  CreatedOrder:
+    type: "object"
+    required:
+      - "email-address"
+      - "productId"
+      - "timestamp"
+      - "price"
+    properties:
+      email-address:
+        type: "string"
+        example: "firstName.lastName@company.com"
+        description: "Buyer's email address"
+      productId:
+        type: "array"
+        items:
+          type: "integer"
+          format: int64
+          example: 100000
+        description: "ids of products to buy"
+      timestamp:
+        type: "string"
+        format: "date-time"
+        example: "2017-07-21T17:32:28Z"
+        description: "timestamp of the transaction"
+      price:
+        type: "integer"
+        format: int64
+        example: 100000
+        description: "Summary price for all products in EURO"

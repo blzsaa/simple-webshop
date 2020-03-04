@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ProductCreationIT {
+class CreateProductIT {
   @Autowired private MockMvc mockMvc;
   @Autowired private ProductRepository productRepository;
 

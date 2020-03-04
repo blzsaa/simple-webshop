@@ -5,6 +5,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hu.blzsaa.simple_webshop.model.Product;
+import hu.blzsaa.simple_webshop.model.Product2Create;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 public class ITTestHelper {
@@ -21,6 +24,21 @@ public class ITTestHelper {
   }
 
   static MockHttpServletRequestBuilder createSnakeOilProductRequest() {
-    return createProductRequestFrom(asJsonString(SNAKE_OIL_PRODUCT2CREATE));
+    return createProductRequestFrom(SNAKE_OIL_PRODUCT2CREATE);
+  }
+
+  public static MockHttpServletRequestBuilder createProductRequestFrom(
+      Product2Create product2Create) {
+    return createProductRequestFrom(asJsonString(product2Create));
+  }
+
+  public static Long getId(final ResultActions obj) {
+    try {
+      return new ObjectMapper()
+          .readValue(obj.andReturn().getResponse().getContentAsString(), Product.class)
+          .getId();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 }

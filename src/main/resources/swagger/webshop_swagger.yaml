@@ -186,6 +186,7 @@ definitions:
         type: "string"
         example: "firstName.lastName@company.com"
         description: "Buyer's email address"
+        pattern: '[^@]+@[^\.]+\..+'
       productId:
         type: "array"
         items:

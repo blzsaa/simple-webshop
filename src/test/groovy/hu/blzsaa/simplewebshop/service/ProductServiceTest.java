@@ -93,4 +93,28 @@ class ProductServiceTest {
     // then
     assertThat(actual).isInstanceOf(NoProductWasFoundException.class).hasMessageContaining("123");
   }
+
+  @Test
+  void shouldGetProductDboByIdIfFound() {
+    // given
+    doReturn(Optional.of(PRODUCT_DBO)).when(productRepository).findById(123L);
+
+    // when
+    var actual = underTest.getProductDbo(123L);
+
+    // then
+    assertThat(actual).isEqualTo(PRODUCT_DBO);
+  }
+
+  @Test
+  void shouldThrowNoProductDboFoundExceptionWhenThereIsNoProductWithGivenId() {
+    // given
+    doReturn(Optional.empty()).when(productRepository).findById(123L);
+
+    // when
+    var actual = catchThrowable(() -> underTest.getProductDbo(123L));
+
+    // then
+    assertThat(actual).isInstanceOf(NoProductWasFoundException.class).hasMessageContaining("123");
+  }
 }

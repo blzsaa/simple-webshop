@@ -33,6 +33,12 @@ public class ProductService {
         .orElseThrow(() -> new NoProductWasFoundException(productId));
   }
 
+  public ProductDbo getProductDbo(Long productId) {
+    return productRepository
+        .findById(productId)
+        .orElseThrow(() -> new NoProductWasFoundException(productId));
+  }
+
   public List<Product> getAllProducts() {
     return productRepository.findAll().stream()
         .map(productMapper::transform)

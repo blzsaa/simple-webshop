@@ -29,4 +29,12 @@ public class ProductController implements ProductApi {
     LOGGER.info("Product saved: {}", product);
     return ResponseEntity.created(locationBuilder.getLocation(product)).body(product);
   }
+
+  @Override
+  public ResponseEntity<Product> getProductById(Long productId) {
+    LOGGER.info("getting product by id: {}", productId);
+    Product product = productService.getProduct(productId);
+    LOGGER.info("Returning product: {}", product);
+    return ResponseEntity.ok(product);
+  }
 }

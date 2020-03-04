@@ -40,4 +40,17 @@ class ProductControllerTest {
     assertThat(actual.getHeaders().get("Location")).containsOnly("uri");
     assertThat(actual.getBody()).isEqualTo(SNAKE_OIL_PRODUCT);
   }
+
+  @Test
+  void getProductShouldCallServiceAndReturnWithOkAndProduct() {
+    // given
+    doReturn(SNAKE_OIL_PRODUCT).when(productService).getProduct(12L);
+
+    // when
+    var actual = underTest.getProductById(12L);
+
+    // then
+    assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(actual.getBody()).isEqualTo(SNAKE_OIL_PRODUCT);
+  }
 }

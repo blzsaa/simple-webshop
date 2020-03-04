@@ -1,13 +1,15 @@
 package hu.blzsaa.simplewebshop.it;
 
+import static hu.blzsaa.simplewebshop.TestConstants.SNAKE_OIL_PRODUCT2CREATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hu.blzsaa.simplewebshop.TestConstants;
 import hu.blzsaa.simplewebshop.repository.ProductRepository;
+import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ class ProductCreationIT {
     ResultActions perform =
         this.mockMvc.perform(
             post("/product")
-                .content(asJsonString(TestConstants.SNAKE_OIL_PRODUCT2CREATE))
+                .content(asJsonString(SNAKE_OIL_PRODUCT2CREATE))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON));
 
@@ -53,6 +55,31 @@ class ProductCreationIT {
               assertThat(actual.getPrice()).isEqualTo(135);
               assertThat(actual.getId()).isNotNull();
             });
+  }
+
+  @Test
+  public void locationShouldPointToCorrectProduct() throws Exception {
+    // given
+    ResultActions perform =
+        this.mockMvc.perform(
+            post("/product")
+                .content(asJsonString(SNAKE_OIL_PRODUCT2CREATE))
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON));
+
+    // when
+    var mvcResult =
+        this.mockMvc
+            .perform(
+                get(Objects.requireNonNull(perform.andReturn().getResponse().getRedirectedUrl()))
+                    .accept(APPLICATION_JSON))
+            .andExpect(status().isOk());
+
+    // then
+    mvcResult
+        .andExpect(jsonPath("$.name").value("snake oil"))
+        .andExpect(jsonPath("$.price").value("135"))
+        .andExpect(jsonPath("$.id").exists());
   }
 
   @Test

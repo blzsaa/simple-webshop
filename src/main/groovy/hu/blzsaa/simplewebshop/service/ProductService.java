@@ -3,6 +3,7 @@ package hu.blzsaa.simplewebshop.service;
 import hu.blzsaa.simple_webshop.model.Product;
 import hu.blzsaa.simple_webshop.model.Product2Create;
 import hu.blzsaa.simplewebshop.dbo.ProductDbo;
+import hu.blzsaa.simplewebshop.exception.NoProductWasFoundException;
 import hu.blzsaa.simplewebshop.mapper.ProductMapper;
 import hu.blzsaa.simplewebshop.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,12 @@ public class ProductService {
     var transformed = productMapper.transform(body);
     ProductDbo saved = productRepository.save(transformed);
     return productMapper.transform(saved);
+  }
+
+  public Product getProduct(Long productId) {
+    return productRepository
+        .findById(productId)
+        .map(productMapper::transform)
+        .orElseThrow(() -> new NoProductWasFoundException(productId));
   }
 }

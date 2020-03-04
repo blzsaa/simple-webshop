@@ -12,7 +12,7 @@ schemes:
   - "https"
   - "http"
 paths:
-  /product:
+  /products:
     post:
       tags:
         - "product"
@@ -42,7 +42,22 @@ paths:
             $ref: "#/definitions/Product"
         400:
           description: "Invalid input"
-  /product/{productId}:
+    get:
+      tags:
+        - "product"
+      summary: "Find all products"
+      description: "Returns a all products"
+      operationId: "getAllProducts"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+  /products/{productId}:
     get:
       tags:
         - "product"

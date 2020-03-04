@@ -32,20 +32,20 @@ class GetProductIT {
 
     // when
     ResultActions perform =
-        this.mockMvc.perform(get("/product/{id}", saved.getId()).accept(APPLICATION_JSON));
+        this.mockMvc.perform(get("/products/{id}", saved.getId()).accept(APPLICATION_JSON));
 
     // then
     perform
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.name").value("name"))
-        .andExpect(jsonPath("$.price").value("123"))
+        .andExpect(jsonPath("$.name").value("snake oil"))
+        .andExpect(jsonPath("$.price").value("135"))
         .andExpect(jsonPath("$.id").value(saved.getId()));
   }
 
   @Test
   public void shouldNotLetSearchWithInvalidId() throws Exception {
     // when
-    ResultActions perform = this.mockMvc.perform(get("/product/asd").accept(APPLICATION_JSON));
+    ResultActions perform = this.mockMvc.perform(get("/products/asd").accept(APPLICATION_JSON));
 
     // then
     perform.andExpect(status().isBadRequest());
@@ -55,7 +55,7 @@ class GetProductIT {
   public void shouldReturn404ForMissingProducts() throws Exception {
     // when
     ResultActions perform =
-        this.mockMvc.perform(get("/product/{id}", 1111L).accept(APPLICATION_JSON));
+        this.mockMvc.perform(get("/products/{id}", 1111L).accept(APPLICATION_JSON));
 
     // then
     perform.andExpect(status().isNotFound());

@@ -1,17 +1,18 @@
 package hu.blzsaa.simplewebshop.controller;
 
-import hu.blzsaa.simple_webshop.api.ProductApi;
+import hu.blzsaa.simple_webshop.api.ProductsApi;
 import hu.blzsaa.simple_webshop.model.Product;
 import hu.blzsaa.simple_webshop.model.Product2Create;
 import hu.blzsaa.simplewebshop.helper.LocationBuilder;
 import hu.blzsaa.simplewebshop.service.ProductService;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class ProductController implements ProductApi {
+public class ProductController implements ProductsApi {
   private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
   private final ProductService productService;
@@ -35,6 +36,14 @@ public class ProductController implements ProductApi {
     LOGGER.info("getting product by id: {}", productId);
     Product product = productService.getProduct(productId);
     LOGGER.info("Returning product: {}", product);
+    return ResponseEntity.ok(product);
+  }
+
+  @Override
+  public ResponseEntity<List<Product>> getAllProducts() {
+    LOGGER.info("getting all products");
+    List<Product> product = productService.getAllProducts();
+    LOGGER.info("Returning {} products", product.size());
     return ResponseEntity.ok(product);
   }
 }

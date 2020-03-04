@@ -30,11 +30,11 @@ class ProductCreationIT {
   }
 
   @Test
-  public void shouldReturnDefaultMessage() throws Exception {
+  public void shouldAddProduct() throws Exception {
     // when
     ResultActions perform =
         this.mockMvc.perform(
-            post("/product")
+            post("/products")
                 .content(asJsonString(SNAKE_OIL_PRODUCT2CREATE))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON));
@@ -45,7 +45,7 @@ class ProductCreationIT {
         .andExpect(jsonPath("$.name").value("snake oil"))
         .andExpect(jsonPath("$.price").value("135"))
         .andExpect(jsonPath("$.id").exists())
-        .andExpect(redirectedUrlPattern("http://localhost/product/*"));
+        .andExpect(redirectedUrlPattern("http://localhost/products/*"));
 
     assertThat(productRepository.findAll()).hasSize(1);
     assertThat(productRepository.findAll().get(0))
@@ -62,7 +62,7 @@ class ProductCreationIT {
     // given
     ResultActions perform =
         this.mockMvc.perform(
-            post("/product")
+            post("/products")
                 .content(asJsonString(SNAKE_OIL_PRODUCT2CREATE))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON));
@@ -87,7 +87,7 @@ class ProductCreationIT {
     // when
     ResultActions perform =
         this.mockMvc.perform(
-            post("/product")
+            post("/products")
                 .content("{\"name\":\"name\"}")
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON));

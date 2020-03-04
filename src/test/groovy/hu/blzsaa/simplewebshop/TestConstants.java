@@ -10,5 +10,6 @@ public class TestConstants {
 
   public static final Product SNAKE_OIL_PRODUCT =
       new Product().id(3L).name("snake oil").price(135L);
-  public static final ProductDbo PRODUCT_DBO = new ProductDbo(12L, "name", 123L);
+
+  public static final ProductDbo PRODUCT_DBO = new ProductDbo(3L, "snake oil", 135L);
 }

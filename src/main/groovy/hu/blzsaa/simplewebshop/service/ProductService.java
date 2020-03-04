@@ -6,6 +6,8 @@ import hu.blzsaa.simplewebshop.dbo.ProductDbo;
 import hu.blzsaa.simplewebshop.exception.NoProductWasFoundException;
 import hu.blzsaa.simplewebshop.mapper.ProductMapper;
 import hu.blzsaa.simplewebshop.repository.ProductRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,5 +31,11 @@ public class ProductService {
         .findById(productId)
         .map(productMapper::transform)
         .orElseThrow(() -> new NoProductWasFoundException(productId));
+  }
+
+  public List<Product> getAllProducts() {
+    return productRepository.findAll().stream()
+        .map(productMapper::transform)
+        .collect(Collectors.toList());
   }
 }

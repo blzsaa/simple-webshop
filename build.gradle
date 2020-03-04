@@ -1,0 +1,39 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'groovy'
+    id "com.diffplug.gradle.spotless" version "3.27.1"
+}
+
+group = 'hu.blzsaa'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.codehaus.groovy:groovy:3.0.1'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+spotless {
+    java {
+        removeUnusedImports()
+        googleJavaFormat()
+        target 'src/**/*.java'
+    }
+    groovy {
+        greclipse()
+        target 'src/**/*.groovy'
+    }
+}

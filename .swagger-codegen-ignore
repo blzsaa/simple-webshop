@@ -1,0 +1,17 @@
+.travis.yml
+build.sbt
+git_push.sh
+gradle.properties
+**/AndroidManifest.xml
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+gradlew
+gradlew.bat
+.gitignore
+src/test/**
+**/Swagger2SpringBoot.java
+pom.xml
+README.md
+**/application.properties
+docs/**
+settings.gradle

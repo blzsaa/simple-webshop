@@ -1,0 +1,81 @@
+swagger: "2.0"
+info:
+  description: "Very simple webshop"
+  version: "1.0.0"
+  title: "Very simple webshop"
+host: "localhost:8080"
+basePath: "/v2"
+tags:
+  - name: "product"
+    description: "Everything about products"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /product:
+    post:
+      tags:
+        - "product"
+      summary: "Add a new product to the store"
+      description: "Add a new product to the store"
+      operationId: "addProduct"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Product object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Product2Create"
+      responses:
+        201:
+          description: "Product created"
+          headers:
+            Location:
+              type: string
+              format: url
+              description: A link to the product
+          schema:
+            $ref: "#/definitions/Product"
+        400:
+          description: "Invalid input"
+definitions:
+  Product2Create:
+    type: "object"
+    required:
+      - "name"
+      - "price"
+    properties:
+      name:
+        type: "string"
+        example: "snake oil"
+        description: "Name of the product"
+      price:
+        type: "integer"
+        format: int64
+        example: 100000
+        description: "Price in EURO"
+  Product:
+    type: "object"
+    required:
+      - "id"
+      - "name"
+      - "price"
+    properties:
+      id:
+        type: "integer"
+        format: int64
+        example: 10
+        description: "Product's id"
+      name:
+        type: "string"
+        example: "snake oil"
+        description: "Name of the product"
+      price:
+        type: "integer"
+        format: int64
+        example: 100000
+        description: "Price in EURO"

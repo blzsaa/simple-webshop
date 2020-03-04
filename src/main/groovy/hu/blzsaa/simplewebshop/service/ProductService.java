@@ -38,4 +38,13 @@ public class ProductService {
         .map(productMapper::transform)
         .collect(Collectors.toList());
   }
+
+  public Product updateProduct(Long productId, Product2Create body) {
+    return productRepository
+        .findById(productId)
+        .map(p -> productMapper.update(p, body))
+        .map(productRepository::save)
+        .map(productMapper::transform)
+        .orElseThrow(() -> new NoProductWasFoundException(productId));
+  }
 }

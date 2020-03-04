@@ -53,4 +53,17 @@ class ProductControllerTest {
     assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(actual.getBody()).isEqualTo(SNAKE_OIL_PRODUCT);
   }
+
+  @Test
+  void updateProductShouldCallServiceAndReturnWithOkAndProduct() {
+    // given
+    doReturn(SNAKE_OIL_PRODUCT).when(productService).updateProduct(12L, SNAKE_OIL_PRODUCT2CREATE);
+
+    // when
+    var actual = underTest.updateProductById(12L, SNAKE_OIL_PRODUCT2CREATE);
+
+    // then
+    assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(actual.getBody()).isEqualTo(SNAKE_OIL_PRODUCT);
+  }
 }

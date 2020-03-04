@@ -46,4 +46,12 @@ public class ProductController implements ProductsApi {
     LOGGER.info("Returning {} products", product.size());
     return ResponseEntity.ok(product);
   }
+
+  @Override
+  public ResponseEntity<Product> updateProductById(Long productId, Product2Create body) {
+    LOGGER.info("incoming request to update product with id: {} to value: {}", productId, body);
+    Product product = productService.updateProduct(productId, body);
+    LOGGER.info("Update was successful");
+    return ResponseEntity.ok(product);
+  }
 }

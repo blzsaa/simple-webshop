@@ -14,4 +14,8 @@ public interface ProductMapper {
   ProductDbo transform(Product2Create product2Create);
 
   Product transform(ProductDbo productDbo);
+
+  @Mapping(target = "name", source = "product2Create.name")
+  @Mapping(target = "price", source = "product2Create.price")
+  ProductDbo update(ProductDbo productDbo, Product2Create product2Create);
 }

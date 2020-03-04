@@ -1,13 +1,11 @@
 package hu.blzsaa.simplewebshop.it;
 
-import static hu.blzsaa.simplewebshop.TestConstants.SNAKE_OIL_PRODUCT2CREATE;
+import static hu.blzsaa.simplewebshop.it.ITTestHelper.createProductRequestFrom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.blzsaa.simplewebshop.repository.ProductRepository;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
@@ -32,12 +30,7 @@ class ProductCreationIT {
   @Test
   public void shouldAddProduct() throws Exception {
     // when
-    ResultActions perform =
-        this.mockMvc.perform(
-            post("/products")
-                .content(asJsonString(SNAKE_OIL_PRODUCT2CREATE))
-                .contentType(APPLICATION_JSON)
-                .accept(APPLICATION_JSON));
+    ResultActions perform = mockMvc.perform(ITTestHelper.createSnakeOilProductRequest());
 
     // then
     perform
@@ -60,16 +53,11 @@ class ProductCreationIT {
   @Test
   public void locationShouldPointToCorrectProduct() throws Exception {
     // given
-    ResultActions perform =
-        this.mockMvc.perform(
-            post("/products")
-                .content(asJsonString(SNAKE_OIL_PRODUCT2CREATE))
-                .contentType(APPLICATION_JSON)
-                .accept(APPLICATION_JSON));
+    ResultActions perform = mockMvc.perform(ITTestHelper.createSnakeOilProductRequest());
 
     // when
     var mvcResult =
-        this.mockMvc
+        mockMvc
             .perform(
                 get(Objects.requireNonNull(perform.andReturn().getResponse().getRedirectedUrl()))
                     .accept(APPLICATION_JSON))
@@ -85,24 +73,11 @@ class ProductCreationIT {
   @Test
   public void shouldNotLetRegisterInvalidProducts() throws Exception {
     // when
-    ResultActions perform =
-        this.mockMvc.perform(
-            post("/products")
-                .content("{\"name\":\"name\"}")
-                .contentType(APPLICATION_JSON)
-                .accept(APPLICATION_JSON));
+    ResultActions perform = mockMvc.perform(createProductRequestFrom("{\"name\":\"name\"}"));
 
     // then
     perform.andExpect(status().isBadRequest());
 
     assertThat(productRepository.findAll()).isEmpty();
-  }
-
-  public static String asJsonString(final Object obj) {
-    try {
-      return new ObjectMapper().writeValueAsString(obj);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
   }
 }

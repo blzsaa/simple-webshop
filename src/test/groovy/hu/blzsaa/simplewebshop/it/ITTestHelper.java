@@ -11,11 +11,11 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 public class ITTestHelper {
-  static MockHttpServletRequestBuilder createProductRequestFrom(String json) {
+  public static MockHttpServletRequestBuilder createProductRequestFrom(String json) {
     return post("/products").content(json).contentType(APPLICATION_JSON).accept(APPLICATION_JSON);
   }
 
-  static String asJsonString(final Object obj) {
+  public static String asJsonString(final Object obj) {
     try {
       return new ObjectMapper().writeValueAsString(obj);
     } catch (Exception e) {
@@ -23,7 +23,7 @@ public class ITTestHelper {
     }
   }
 
-  static MockHttpServletRequestBuilder createSnakeOilProductRequest() {
+  public static MockHttpServletRequestBuilder createSnakeOilProductRequest() {
     return createProductRequestFrom(SNAKE_OIL_PRODUCT2CREATE);
   }
 

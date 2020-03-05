@@ -1,11 +1,11 @@
-package hu.blzsaa.simplewebshop.it;
+package hu.blzsaa.simplewebshop.it.products;
 
-import static hu.blzsaa.simplewebshop.it.ITTestHelper.createProductRequestFrom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import hu.blzsaa.simplewebshop.it.ITTestHelper;
 import hu.blzsaa.simplewebshop.repository.ProductRepository;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
@@ -73,7 +73,8 @@ class CreateProductIT {
   @Test
   public void shouldNotLetRegisterInvalidProducts() throws Exception {
     // when
-    ResultActions perform = mockMvc.perform(createProductRequestFrom("{\"name\":\"name\"}"));
+    ResultActions perform =
+        mockMvc.perform(ITTestHelper.createProductRequestFrom("{\"name\":\"name\"}"));
 
     // then
     perform.andExpect(status().isBadRequest());

@@ -1,4 +1,4 @@
-package hu.blzsaa.simplewebshop.it;
+package hu.blzsaa.simplewebshop.it.orders;
 
 import static hu.blzsaa.simplewebshop.TestConstants.OFFSET_DATE_TIME;
 import static org.assertj.core.api.Assertions.assertThat;

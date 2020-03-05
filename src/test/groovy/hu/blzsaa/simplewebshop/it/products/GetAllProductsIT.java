@@ -1,4 +1,4 @@
-package hu.blzsaa.simplewebshop.it;
+package hu.blzsaa.simplewebshop.it.products;
 
 import static hu.blzsaa.simplewebshop.TestConstants.PRODUCT_DBO;
 import static hu.blzsaa.simplewebshop.TestConstants.SNAKE_OIL_PRODUCT;

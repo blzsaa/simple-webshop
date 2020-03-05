@@ -1,4 +1,4 @@
-package hu.blzsaa.simplewebshop.it;
+package hu.blzsaa.simplewebshop.it.products;
 
 import static hu.blzsaa.simplewebshop.it.ITTestHelper.asJsonString;
 import static hu.blzsaa.simplewebshop.it.ITTestHelper.createSnakeOilProductRequest;

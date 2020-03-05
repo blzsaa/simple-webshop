@@ -6,7 +6,9 @@ import hu.blzsaa.simplewebshop.dbo.OrderDbo;
 import hu.blzsaa.simplewebshop.dbo.ProductDbo;
 import hu.blzsaa.simplewebshop.mapper.OrderMapper;
 import hu.blzsaa.simplewebshop.repository.OrderRepository;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +34,18 @@ public class OrderService {
     OrderDbo orderDbo = orderMapper.transform(order, productDboList, price);
     var saved = orderRepository.save(orderDbo);
     return orderMapper.transform(saved);
+  }
+
+  public List<CreatedOrder> getAllOrdersBetween(OffsetDateTime from, OffsetDateTime to) {
+    return orderRepository.findAll().stream()
+        .filter(o -> isTimestampBetween(o.getTimestamp(), from, to))
+        .map(orderMapper::transform)
+        .collect(Collectors.toList());
+  }
+
+  private boolean isTimestampBetween(
+      OffsetDateTime offsetDateTime, OffsetDateTime from, OffsetDateTime to) {
+    return Optional.ofNullable(from).orElse(OffsetDateTime.MIN).isBefore(offsetDateTime)
+        && Optional.ofNullable(to).orElse(OffsetDateTime.MAX).isAfter(offsetDateTime);
   }
 }

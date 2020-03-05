@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class OrderIT {
+class CreateOrderIT {
   @Autowired private MockMvc mockMvc;
   @Autowired private ProductRepository productRepository;
   @Autowired private ObjectMapper objectMapper;
@@ -39,7 +39,7 @@ class OrderIT {
   }
 
   @Test
-  public void shouldAddProduct() throws Exception {
+  public void shouldAddOrder() throws Exception {
     // given
     var id1 = getId(mockMvc.perform(createSnakeOilProductRequest()));
     var id2 = getId(mockMvc.perform(createProductRequestFrom(ACME_PRODUCT2CREATE)));
@@ -62,6 +62,8 @@ class OrderIT {
     var actualCreatedOrder =
         objectMapper.readValue(actual.getResponse().getContentAsString(), CreatedOrder.class);
     assertActualOrder(actualCreatedOrder, productIdList);
+
+    assertThat(actual.getResponse().getStatus()).isEqualTo(200);
     assertThat(orderRepository.findAll()).hasSize(1);
     var actualOrder = orderRepository.findAll().get(0);
     assertActualOrderInDb(actualOrder, productIdList);

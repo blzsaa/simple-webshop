@@ -17,6 +17,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'groovy'
     id "com.diffplug.gradle.spotless" version "3.27.1"
+    id "com.palantir.docker" version '0.21.0'
 }
 
 group = 'hu.blzsaa'
@@ -116,3 +117,10 @@ compileJava.dependsOn compileSwaggerJava
 
 sourceSets.main.java.srcDir swaggerOutputDir
 sourceSets.main.resources.srcDir swaggerOutputDir
+
+docker {
+    name "${project.group}/${jar.archiveBaseName.get()}:${jar.archiveVersion.get()}"
+    files jar.archiveFile.get()
+    buildArgs(['JAR_FILE': "${jar.archiveFileName.get()}"])
+}
+docker.dependsOn bootJar

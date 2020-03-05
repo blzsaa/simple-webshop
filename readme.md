@@ -15,3 +15,9 @@ Run program as jar:
 Authentication:
 1. authentication should be added through swagger, see: https://swagger.io/docs/specification/authentication/
 1. then the same in spring: https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api#10-swagger-ui-with-an-oauth-secured-api
+
+Run program in fault tolerant way:
+1. build docker image with: `./gradlew docker` 
+1. run `docker-compose build`
+1. run `docker-compose up`
+1. call http://localhost:8080/swagger-ui.html or http://localhost:8081/swagger-ui.html for getting the API

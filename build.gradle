@@ -40,8 +40,9 @@ dependencies {
     implementation 'io.swagger:swagger-annotations:1.5.22'
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    runtimeOnly 'mysql:mysql-connector-java'
 
-    runtimeOnly 'com.h2database:h2'
+    testRuntimeOnly 'com.h2database:h2'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

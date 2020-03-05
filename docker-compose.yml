@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mysqlDb:
+    image: mysql:8.0.17
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: webshop
+    ports:
+      - "3306:3306"
+  webshop1:
+    image: hu.blzsaa/simple-webshop:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysqlDb
+  webshop2:
+    image: hu.blzsaa/simple-webshop:0.0.1-SNAPSHOT
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mysqlDb
